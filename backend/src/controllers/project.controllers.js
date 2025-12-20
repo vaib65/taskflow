@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import { Project } from "../models/project.models";
-import { ApiError } from "../utils/api-error";
-import { ApiResponse } from "../utils/api-response";
+import { Project } from "../models/project.models.js";
+import { ApiError } from "../utils/api-error.js";
+import { ApiResponse } from "../utils/api-response.js";
 
-import { asyncHandler } from "../utils/async-handler";
+import { asyncHandler } from "../utils/async-handler.js";
 
 const createProject = asyncHandler(async (req, res) => {
   const { project_name, description } = req.body;
