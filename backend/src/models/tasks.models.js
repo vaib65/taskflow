@@ -18,7 +18,7 @@ const TasksSchema = new Schema(
       default: "medium",
     },
     project: { type: Schema.Types.ObjectId, ref: "Project", required: true },
-    asignee: { type: Schema.Types.ObjectId, ref: "User", default: null },
+    assignee: { type: Schema.Types.ObjectId, ref: "User", default: null },
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: "User",

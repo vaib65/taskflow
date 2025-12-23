@@ -22,6 +22,7 @@ import healthCheckRouter from "./routes/healthCheck.routes.js"
 import userRouter from "./routes/user.routes.js";
 import projectRouter from "./routes/project.routes.js";
 import taskRouter from "./routes/task.routes.js";
+import { errorHandler } from "./middlewares/error.middlewares.js";
 
 //routes
 app.use("/api/v1/healthcheck", healthCheckRouter);
@@ -29,5 +30,7 @@ app.use("/api/v1/user", userRouter)
 app.use("/api/v1/projects", projectRouter)
 app.use("/api/v1", taskRouter);
 
+// GLOBAL ERROR HANDLER
+app.use(errorHandler);
 
 export { app };

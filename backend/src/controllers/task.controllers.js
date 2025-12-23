@@ -71,9 +71,7 @@ const createTask = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, populatedTask, "Task created successfully"));
 });
 
-{
-  /*getTasksByProject controller */
-}
+{/*getTasksByProject controller */}
 const getTasksByProject = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
 
@@ -153,13 +151,32 @@ const updateTask = asyncHandler(async (req, res) => {
     }
   }
 
+  const allowedTransition = {
+    todo: ["in-progress"],
+    "in-progress": ["done"],
+    done: [],
+  };
   if (title !== undefined) task.title = title;
   if (description !== undefined) task.description = description;
-  if (status !== undefined) task.status = status;
+  // if (status !== undefined) task.status = status;
   if (priority !== undefined) task.priority = priority;
   if (assignee !== undefined) task.assignee = assignee;
   if (dueDate !== undefined) task.dueDate = dueDate;
+  if (status !== undefined) {
+    const currentStatus = task.status;
 
+    const allowedNextStatus = allowedTransition[currentStatus] || [];
+
+    if (!allowedNextStatus.includes(status)) {
+      throw new ApiError(
+        400,
+        `Invalid status transition from ${currentStatus} to ${status}`
+      );
+    }
+    task.status = status;
+  }
+
+  
   await task.save();
 
  const updatedTask = await Task.findById(task._id)
